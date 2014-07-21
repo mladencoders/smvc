@@ -1,15 +1,20 @@
 <?php
 
 class Index extends Smvc_Controller
-{
+{   
+    function __construct() 
+    {
+
+    }
+    
     public function index()
     {
-        $this->_view->setData("message", "message");
-        $this->_view->render();
+        $this->getView()->setData("message", "message");
+        $this->getView()->renderTemplate();
     }
     
     public function login()
     {
-        $this->_view->render();
+        $this->getView()->renderTemplate();
     }
 }

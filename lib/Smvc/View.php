@@ -13,6 +13,11 @@ class Smvc_View
     
     protected $_data = array();
     
+    function __construct() 
+    {
+
+    }
+    
     public function setTemplate($template)
     {
         $this->_template = $template;
@@ -23,13 +28,22 @@ class Smvc_View
         return $this->_template;
     }
     
-    public function render()
+    public function renderTemplate()
     {
+        $this->load();
+        $this->render();  
+    }
+    
+    public function load()
+    {       
         $this->loadScripts();
         $this->loadHeader();
         $this->loadContent();
         $this->loadFooter();
-        
+    }
+    
+    public function render()
+    {       
         echo '<html>';
         echo '<head>';
         echo $this->getScripts();

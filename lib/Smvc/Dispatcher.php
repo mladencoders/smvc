@@ -18,16 +18,15 @@ class Smvc_Dispatcher
            $url = explode('/', filter_var(rtrim($_GET['path'], '/'), FILTER_SANITIZE_URL));
         }
         
-        $this->controller = isset($url[0])? $url[0] : 'index';
+        $this->controller = isset($url[0])? ucfirst($url[0]) : 'Index';
         $this->action = isset($url[1])? $url[1] : 'index';
         $this->params = isset($url[2])? array_slice($url,2) : array();
     }
     
     protected function _dispatch()
     {
-        require APPLICATION_PATH . '/Controller/' . $this->controller . ".php";
+        require APPLICATION_PATH . '/Controller/' . ucfirst($this->controller) . ".php";
         $controller = new $this->controller;
-        
         $view = new Smvc_View();
         $view->setTemplate($this->controller . '/' . $this->action);
         $controller->setView($view);

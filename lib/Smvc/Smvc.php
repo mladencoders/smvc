@@ -9,7 +9,7 @@ class Smvc
         $autoloader = new Autoloader();
         $autoloader->init();
         
-        $dispatcher = new Smvc_Dispatcher();
+        $dispatcher = new Smvc_Dispatcher();        
         $dispatcher->run();
         
     }   
