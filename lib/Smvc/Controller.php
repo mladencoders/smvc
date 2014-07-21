@@ -3,11 +3,7 @@
 class Smvc_Controller
 {
     protected $_view;
-    protected $_params = array();
-    
-    function __construct() {
-
-    }
+    protected $_params = array();   
     
     public function setParams($params)
     {
