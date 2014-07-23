@@ -38,7 +38,7 @@ class Smvc_View
     protected function _loadContent()
     {
         ob_start();
-        require 'View/' . $this->_template . ".phtml";
+        require 'View' . DS . $this->_template . ".phtml";
         $this->_content = ob_get_clean();
     }
     

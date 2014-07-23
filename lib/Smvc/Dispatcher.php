@@ -28,8 +28,7 @@ class Smvc_Dispatcher
         $controlerClass = 'Controller_' . ucfirst($this->controller);
         $controller = new $controlerClass;
         
-        $view = new Smvc_View();
-        $view->setTemplate($this->controller . '/' . $this->action);
+        $view = new Smvc_View($this->controller . DS . $this->action);
         $controller->setView($view);
         $controller->dispatch($this->action);
     }

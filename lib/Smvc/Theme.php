@@ -20,19 +20,28 @@ class Smvc_Theme
         return $this->_theme;
     }
     
-    public function get($block)
+    public function getBlock($block)
     {
         if (!isset($this->_blocks[$block])) {
-            $this->_load($block);
+            $this->_load($block, ".phtml");
         }
         
         return $this->_blocks[$block];
     }
     
-    protected function _load($block)
+    public function getCssBlock($block)
+    {
+        if (!isset($this->_blocks[$block])) {
+            $this->_load($block, ".css");
+        }
+        
+        return $this->_blocks[$block];
+    }
+    
+    protected function _load($block, $extension)
     {
         ob_start();
-        require 'skin/' . $this->_theme . "/" . $block . ".phtml";
+        require 'skin' . DS . $this->_theme . DS . $block . $extension;
         $this->_blocks[$block] = ob_get_clean();
     }
 }

@@ -7,7 +7,7 @@ class Smvc_Controller
     
     function __construct() 
     {
-
+        
     }
     
     public function setParams($params)
