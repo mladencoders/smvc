@@ -1,6 +1,6 @@
 <?php
 
-class Index extends Smvc_Controller
+class Controller_Index extends Smvc_Controller
 {   
     function __construct() 
     {

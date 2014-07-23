@@ -25,8 +25,9 @@ class Smvc_Dispatcher
     
     protected function _dispatch()
     {
-        require APPLICATION_PATH . '/Controller/' . ucfirst($this->controller) . ".php";
-        $controller = new $this->controller;
+        $controlerClass = 'Controller_' . ucfirst($this->controller);
+        $controller = new $controlerClass;
+        
         $view = new Smvc_View();
         $view->setTemplate($this->controller . '/' . $this->action);
         $controller->setView($view);
