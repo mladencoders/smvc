@@ -1,6 +1,12 @@
-<h1>test</h1>
-<table>
-<tr><td>ryr</td><td>ryry</td></tr>
-<tr><td>rty</td><td>rtyr</td></tr>
-<?php echo $this->getData("message")?>
-</table>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/smvc/skin/default/css/styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        Body
+        <?php echo Smvc::getRootDirPath()?>
+        <?php echo Smvc::getDirPath("app")?>
+    </div>
+</body>
+</html>
