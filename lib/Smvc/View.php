@@ -2,20 +2,17 @@
 
 class Smvc_View
 {
-    protected $_template = "";
+    protected $_template;
     protected $_isRendered = false;
     
-    protected $_theame = "default";
-    protected $_scripts = "";
-    protected $_header = "";
-    protected $_content = "";
-    protected $_footer = "";
+    protected $_content;
     
     protected $_data = array();
     
-    function __construct() 
+    function __construct($template = "") 
     {
-
+        $this->_theame = new Smvc_Theme();
+        $this->_template = $template;
     }
     
     public function setTemplate($template)
@@ -28,80 +25,30 @@ class Smvc_View
         return $this->_template;
     }
     
-    public function renderTemplate()
+    public function getTheme()
     {
-        $this->load();
-        $this->render();  
-    }
-    
-    public function load()
-    {       
-        $this->loadScripts();
-        $this->loadHeader();
-        $this->loadContent();
-        $this->loadFooter();
+        return $this->_theame;
     }
     
     public function render()
-    {       
-        echo '<html>';
-        echo '<head>';
-        echo $this->getScripts();
-        echo '</head>';
-        echo '<body>';
-        echo $this->getHeader();
-        echo $this->getContent();
-        echo $this->getFooter();
-        echo '</body>';
-        echo '</html>';
+    {             
+        echo $this->_getContent();
     }
     
-    public function loadScripts()
-    {
-        ob_start();
-        require 'skin/' . $this->_theame . "/scripts.phtml";
-        $this->_scripts = ob_get_clean();
-    }
-    
-    public function loadHeader()
-    {
-        ob_start();
-        require 'skin/' . $this->_theame . "/header.phtml";
-        $this->_header = ob_get_clean();
-    }
-    
-    public function loadContent()
+    protected function _loadContent()
     {
         ob_start();
         require 'View/' . $this->_template . ".phtml";
         $this->_content = ob_get_clean();
     }
     
-    public function loadFooter()
+    protected function _getContent()
     {
-        ob_start();
-        require 'skin/' . $this->_theame . "/footer.phtml";
-        $this->_footer = ob_get_clean();
-    }
-    
-    public function getScripts()
-    {
-        return $this->_scripts;
-    }
-    
-    public function getHeader()
-    {
-        return $this->_header;
-    }
-    
-    public function getContent()
-    {
+        if (!isset($this->_content)) {
+            $this->_loadContent();
+        }
+        
         return $this->_content;
-    }
-    
-    public function getFooter()
-    {
-        return $this->_footer;
     }
     
     public function setData($key, $value)

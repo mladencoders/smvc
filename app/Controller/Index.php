@@ -10,11 +10,11 @@ class Controller_Index extends Smvc_Controller
     public function index()
     {
         $this->getView()->setData("message", "message");
-        $this->getView()->renderTemplate();
+        $this->getView()->render();
     }
     
     public function login()
     {
-        $this->getView()->renderTemplate();
+        $this->getView()->render();
     }
 }
