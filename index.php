@@ -27,5 +27,5 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require_once 'Smvc/Smvc.php';
 
 $app = new Smvc();
-Smvc::setRoot(realpath(dirname(__FILE__)));
-$app->bootstrap();
+$app->bootstrap(dirname(__FILE__), 
+    APPLICATION_PATH . DS . "config" . DS . "app.ini");

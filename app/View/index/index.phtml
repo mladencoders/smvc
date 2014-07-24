@@ -7,6 +7,12 @@
         Body
         <?php echo Smvc::getRootDirPath()?>
         <?php echo Smvc::getDirPath("app")?>
+        <?php echo $this->getTheme()->getBlock('header')?>
+        <?php
+            $var = "trt";
+            Smvc::dump($var);
+        ?>
+        <?php echo Smvc::getConfig("database", "user");?>
     </div>
 </body>
 </html>

@@ -5,9 +5,13 @@ class Smvc_Theme
     protected $_theme;
     protected $_blocks = array();
     
-    function __construct($themeName = "default") 
-    {
-        $this->_theme = $themeName;
+    function __construct($themeName = null) 
+    {   
+        if ($themeName === null) {
+            $themeName = Smvc::getConfig("skin", "name");
+        }
+        
+        $this->_theme = $themeName !== null ? $themeName : "default";
     }
     
     public function setTheme($themeName)
@@ -27,16 +31,7 @@ class Smvc_Theme
         }
         
         return $this->_blocks[$block];
-    }
-    
-    public function getCssBlock($block)
-    {
-        if (!isset($this->_blocks[$block])) {
-            $this->_load($block, ".css");
-        }
-        
-        return $this->_blocks[$block];
-    }
+    }  
     
     protected function _load($block, $extension)
     {
