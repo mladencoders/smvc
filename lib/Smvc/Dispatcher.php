@@ -26,7 +26,7 @@ class Smvc_Dispatcher
     protected function _dispatch()
     {
         $controlerClass = 'Controller_' . ucfirst($this->controller);
-        $controller = new $controlerClass;
+        $controller = new $controlerClass(new Smvc_Params($this->params));
         
         $view = new Smvc_View($this->controller . DS . $this->action);
         $controller->setView($view);

@@ -3,21 +3,11 @@
 class Smvc_Controller
 {
     protected $_view;
-    protected $_params = array();
+    protected $_params;
     
-    function __construct() 
-    {
-        
-    }
-    
-    public function setParams($params)
+    function __construct(Smvc_Params $params) 
     {
         $this->_params = $params;
-    }
-    
-    public function getParams()
-    {
-        return $this->_params;
     }
     
     public function setView($view)
@@ -38,5 +28,15 @@ class Smvc_Controller
         else {
             throw new Exception("$action action not defined");
         }
+    }
+    
+    public function getParams()
+    {
+        return $this->_params->getParams();
+    }
+    
+    public function getParam(string $key)
+    {
+        return $this->_params->getParam($key);
     }
 }
