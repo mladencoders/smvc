@@ -20,7 +20,7 @@ class Autoloader
         }
         $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
  
-        require $fileName;
+        include $fileName;
 
     }
 }

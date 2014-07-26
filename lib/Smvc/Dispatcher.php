@@ -2,34 +2,37 @@
 
 class Smvc_Dispatcher
 {
-    protected $_controller;
-    protected $_action;
-    protected $_params;
+    protected $_request;
     
     public function run()
     {
-        $this->_parseUrl();
+        
+        $this->_request = new Smvc_Request($_GET['path']);
         $this->_dispatch();
     }
-    
-    protected function _parseUrl()
-    {
-        if (isset($_GET['path'])) {
-           $url = explode('/', filter_var(rtrim($_GET['path'], '/'), FILTER_SANITIZE_URL));
-        }
         
-        $this->controller = isset($url[0])? ucfirst($url[0]) : 'Index';
-        $this->action = isset($url[1])? $url[1] : 'index';
-        $this->params = isset($url[2])? array_slice($url,2) : array();
-    }
-    
     protected function _dispatch()
     {
-        $controlerClass = 'Controller_' . ucfirst($this->controller);
-        $controller = new $controlerClass(new Smvc_Params($this->params));
+        $controlerClass = 'Controller_' . ucfirst($this->_request->getController());
         
-        $view = new Smvc_View($this->controller . DS . $this->action);
+        if (@class_exists($controlerClass)) {          
+            $controller = new $controlerClass($this->_request);
+        } else {
+            self::dispatchTo404();
+            return;
+        }
+
+        $view = new Smvc_View($this->_request->getController() . DS . $this->_request->getAction());
         $controller->setView($view);
-        $controller->dispatch($this->action);
+        $controller->dispatch();
+    }
+    
+    public static function dispatchTo404()
+    {
+        $request = new Smvc_Request_404();
+        $controller = new Controller_Error($request);
+        $view = new Smvc_View($request->getController() . DS . $request->getAction());
+        $controller->setView($view);
+        $controller->dispatch();
     }
 }
