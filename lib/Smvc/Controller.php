@@ -4,10 +4,13 @@ class Smvc_Controller
 {
     protected $_view;
     protected $_request;
+    protected $_response;
     
-    function __construct(Smvc_Request $request) 
+    function __construct(Smvc_Request $request, Smvc_Response $response) 
     {
         $this->_request = $request;
+        $this->_response = $response;
+        $this->setView(new Smvc_View($this->_request, $this->_response));
     }
     
     public function setView($view)

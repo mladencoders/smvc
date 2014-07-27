@@ -7,13 +7,15 @@ class Smvc_View
     protected $_layout;
     protected $_content;
     protected $_request;
+    protected $_response;
     
     protected $_data = array();
     
-    function __construct(Smvc_Request $request) 
+    function __construct(Smvc_Request $request, Smvc_Response $response) 
     {
         $this->_layout = new Smvc_Layout();
         $this->_request = $request;
+        $this->_response = $response;
         $this->_template = $this->getRequest()->getController() . DS . $this->getRequest()->getAction();
     }
     
@@ -40,7 +42,8 @@ class Smvc_View
     public function render()
     {             
         $this->getLayout()->setContent($this->_getContent());
-        $this->getLayout()->render();
+        $this->_response->setBody($this->getLayout()->load());
+        $this->_response->send();
     }
     
     protected function _loadContent()
