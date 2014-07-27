@@ -45,6 +45,11 @@ class Smvc
         return self::$_paths[$dir];
     }
     
+    public static function getBaseUrl($dir = "")
+    {
+        return self::getConfig("url", "base") . $dir;
+    }
+    
     public static function getConfig($section, $config)
     {
         $configs = parse_ini_file(self::$_configPath, true);

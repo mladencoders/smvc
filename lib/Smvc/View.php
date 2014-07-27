@@ -4,14 +4,14 @@ class Smvc_View
 {
     protected $_template;
     protected $_isRendered = false;
-    
+    protected $_layout;
     protected $_content;
     
     protected $_data = array();
     
     function __construct($template = "") 
     {
-        $this->_theame = new Smvc_Theme();
+        $this->_layout = new Smvc_Layout();
         $this->_template = $template;
     }
     
@@ -25,14 +25,15 @@ class Smvc_View
         return $this->_template;
     }
     
-    public function getTheme()
+    public function getLayout()
     {
-        return $this->_theame;
+        return $this->_layout;
     }
     
     public function render()
     {             
-        echo $this->_getContent();
+        $this->getLayout()->setContent($this->_getContent());
+        $this->getLayout()->render();
     }
     
     protected function _loadContent()

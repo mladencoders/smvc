@@ -1,23 +1,4 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="/smvc/skin/default/css/styles.css">
-</head>
-<body>
-    <div class="wrapper">
-        Body
-        <?php echo Smvc::getRootDirPath()?>
-        <?php echo Smvc::getDirPath("app")?>
-        <?php echo $this->getTheme()->getBlock('header')?>
-        <?php
-            $var = "trt";
-            Smvc::dump($var);
-        ?>
-        <?php echo Smvc::getConfig("database", "user");?>
-        
-        <form method="post" action="/smvc/index/index">
-            <input type="text" name="trt" value=""/>
-            <input type="submit">
-        </form>
-    </div>
-</body>
-</html>
+<div id="main-content">
+    <h1>Hello World!!!</h1>
+</div>
+
