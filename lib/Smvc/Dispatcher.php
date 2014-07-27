@@ -6,8 +6,7 @@ class Smvc_Dispatcher
     
     public function run()
     {
-        
-        $this->_request = new Smvc_Request($_GET['path']);
+        $this->_request = new Smvc_Request(isset($_GET['path']) ? $_GET['path']: null);
         $this->_dispatch();
     }
         
@@ -16,23 +15,16 @@ class Smvc_Dispatcher
         $controlerClass = 'Controller_' . ucfirst($this->_request->getController());
         
         if (@class_exists($controlerClass)) {          
-            $controller = new $controlerClass($this->_request);
+            $controller = new $controlerClass($this->_request, new Smvc_Response());
+            $controller->dispatch();
         } else {
             self::dispatchTo404();
-            return;
-        }
-
-        $view = new Smvc_View($this->_request);
-        $controller->setView($view);
-        $controller->dispatch();
+        } 
     }
     
     public static function dispatchTo404()
     {
-        $request = new Smvc_Request_404();
-        $controller = new Controller_Error($request);
-        $view = new Smvc_View($request);
-        $controller->setView($view);
+        $controller = new Controller_Error(new Smvc_Request_404(), new Smvc_Response_404());
         $controller->dispatch();
     }
 }

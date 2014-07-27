@@ -63,6 +63,10 @@ class Smvc_Request
             filter_var(rtrim($rawRequest, '/'), FILTER_SANITIZE_URL)
         );
         
+        if (empty($rawRequest)) {
+            $url = array();
+        }
+        
         $this->_controller = isset($url[0])? $url[0] : 'Index';
         $this->_action = isset($url[1])? $url[1] : 'index';
         $this->_params = isset($url[2])? array_slice($url,2) : array();
