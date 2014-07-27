@@ -4,7 +4,7 @@ class Smvc_Layout
 {
     protected $_skin;
     protected $layout;
-    protected $content = "khm";
+    protected $content = "";
     protected $_blocks = array();
     
     function __construct($skinName = null) 
@@ -45,13 +45,13 @@ class Smvc_Layout
         return $this->_blocks[$block];
     }  
     
-    public function render()
+    public function load()
     {
         if (!isset($this->_layout)) {
             $this->_load();
         }
         
-        echo $this->_layout;
+        return $this->_layout;
     }
     
     protected function _loadBlock($block, $extension)
@@ -66,5 +66,7 @@ class Smvc_Layout
         ob_start();
         require 'skin' . DS . $this->_skin . DS . "layout.phtml";
         $this->_layout = ob_get_clean();
+        
+        return $this->_layout;
     }
 }
