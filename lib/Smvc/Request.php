@@ -6,7 +6,7 @@ class Smvc_Request
     protected $_action;
     protected $_params;
     
-    function __construct($rawRequest = null) 
+    function __construct($rawRequest) 
     {
         $this->_parseUrl($rawRequest);
         $this->_params = new Smvc_Params($this->_params);
@@ -24,12 +24,37 @@ class Smvc_Request
     
     public function getParam($key)
     {
-        return $this->_params->getParam($key);
+        if ($this->_params->getParam($key)) {
+            return $this->_params->getParam($key);
+        } else if (isset($_POST[$key])) {
+            return $_POST[$key];
+        } else {
+            return null;
+        }
     }
     
     public function getParams()
     {
         return $this->_params->getParams();
+    }
+    
+    public function getPost()
+    {
+        return $_POST;
+    }
+    
+    public function getUrl($url)
+    {
+        $url = explode("/", $url);
+        if ($url[0] === "*") {
+            $url[0] = $this->getController();
+        }
+        
+        if ($url[1] === "*") {
+            $url[1] = $this->getAction();
+        }
+        
+        return Smvc::getBaseUrl() . "/" . implode("/", $url);
     }
     
     private function _parseUrl($rawRequest)

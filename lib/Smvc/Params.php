@@ -14,20 +14,9 @@ class Smvc_Params
         return $this->_params;
     }
     
-    public function getPost()
+    public function getParam($key)
     {
-        return $this->_params;
-    }
-    
-    public function getParam($key, $inPost = false)
-    {
-        if (isset($this->_params[$key])) {
-            return $this->_params[$key];
-        } else if ($inPost && isset($_POST[$key])) {
-            return $_POST[$key];
-        } else {
-            return null;
-        }
+        return isset($this->_params[$key])? $this->_params[$key] : null;
     }
     
     public function _parseParams(array $rawParams)

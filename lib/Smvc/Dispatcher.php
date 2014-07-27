@@ -22,7 +22,7 @@ class Smvc_Dispatcher
             return;
         }
 
-        $view = new Smvc_View($this->_request->getController() . DS . $this->_request->getAction());
+        $view = new Smvc_View($this->_request);
         $controller->setView($view);
         $controller->dispatch();
     }
@@ -31,7 +31,7 @@ class Smvc_Dispatcher
     {
         $request = new Smvc_Request_404();
         $controller = new Controller_Error($request);
-        $view = new Smvc_View($request->getController() . DS . $request->getAction());
+        $view = new Smvc_View($request);
         $controller->setView($view);
         $controller->dispatch();
     }

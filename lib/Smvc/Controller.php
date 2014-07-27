@@ -40,4 +40,9 @@ class Smvc_Controller
     {
         return $this->_request->getParam($key);
     }
+    
+    public function getRequest()
+    {
+        return $this->_request;
+    }
 }

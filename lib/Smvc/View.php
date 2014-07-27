@@ -6,13 +6,15 @@ class Smvc_View
     protected $_isRendered = false;
     protected $_layout;
     protected $_content;
+    protected $_request;
     
     protected $_data = array();
     
-    function __construct($template = "") 
+    function __construct(Smvc_Request $request) 
     {
         $this->_layout = new Smvc_Layout();
-        $this->_template = $template;
+        $this->_request = $request;
+        $this->_template = $this->getRequest()->getController() . DS . $this->getRequest()->getAction();
     }
     
     public function setTemplate($template)
@@ -23,6 +25,11 @@ class Smvc_View
     public function getTemplate()
     {
         return $this->_template;
+    }
+    
+    public function getRequest()
+    {
+        return $this->_request;
     }
     
     public function getLayout()
@@ -59,6 +66,6 @@ class Smvc_View
     
     public function getData($key)
     {
-        return $this->_data[$key];
+        return isset($this->_data[$key])? $this->_data[$key]: null;
     }
 }
