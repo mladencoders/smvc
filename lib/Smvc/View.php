@@ -12,11 +12,13 @@ class Smvc_View
     protected $_data = array();
     
     function __construct(Smvc_Request $request, Smvc_Response $response) 
-    {
-        $this->_layout = new Smvc_Layout();
+    {        
         $this->_request = $request;
         $this->_response = $response;
         $this->_template = $this->getRequest()->getController() . DS . $this->getRequest()->getAction();
+        $this->_layout = new Smvc_Layout(
+            Smvc::getModuleConfig($this->getRequest()->getModule(), "skin", "name")
+        );
     }
     
     public function setTemplate($template)
@@ -49,7 +51,7 @@ class Smvc_View
     protected function _loadContent()
     {
         ob_start();
-        require 'View' . DS . $this->_template . ".phtml";
+        require $this->getRequest()->getModule() . DS . 'View' . DS . $this->getTemplate() . ".phtml";
         $this->_content = ob_get_clean();
     }
     

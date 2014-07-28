@@ -1,6 +1,6 @@
 <div id="main-content">
     1.) Test form submitting:
-    <form method="post" action="<?php echo $this->getRequest()->getUrl("index/index")?>">
+    <form method="post" action="<?php echo $this->getRequest()->getUrl("index/index/index")?>">
         <table>
             <tr>
                 <td>Name: </td>
@@ -18,7 +18,18 @@
         <input type="submit" value="Click" />
     </form>
     <br/><br/>
-    2.) <a href="<?php echo $this->getRequest()->getUrl("index/index/name/John/title/Mr.")?>">==Test setting params==</a>
+    2.) <a href="<?php echo $this->getRequest()->getUrl("index/index/index/name/John/title/Mr.")?>">==Test setting params==</a>
     <br/><br/>
     3.) <a href="<?php echo $this->getRequest()->getUrl("bad/request")?>">==Test 404 handling==</a>
+    <br/><br/>
+    4.) Test DB connection
+    <form method="post" action="<?php echo $this->getRequest()->getUrl("index/index")?>">
+        <table>
+            <tr>
+                <td>Db name: </td>
+                <td><input type="text" name="dbname" value="" placeholder="Db name" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="Click" />
+    </form>    
 </div>

@@ -1,0 +1,16 @@
+<div id="main-content">
+    <h1>Hello World!!!</h1>
+    <?php if($this->getData("name")): ?>
+        <h3>Welcome <?php echo $this->getData("title") . " " . $this->getData("name"); ?><h3>
+    <?php endif; ?>
+    <br/>
+    <?php if($this->getData("tables")): ?>
+        Db tables:
+        <?php Smvc_Debug::dump($this->getData("tables")); ?>
+        <?php foreach($this->getData("tables") as $table): ?>
+            <br/><span><?php echo $table?></span>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <br/><a href="<?php echo $this->getRequest()->getUrl("test/index")?>">==Test page==</a>
+</div>
+

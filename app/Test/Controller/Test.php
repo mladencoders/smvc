@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Test extends Smvc_Controller
+class Test_Controller_Test extends Smvc_Controller
 {
     public function index()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Error extends Smvc_Controller
+class Index_Controller_Error extends Smvc_Controller
 {
     public function index()
     {
