@@ -76,4 +76,9 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
         $this->_preparedStmt->execute($params);       
         return $this;
     }
+    
+    public function fetchAll() 
+    {
+        return $this->_preparedStmt->fetchAll();
+    }
 }

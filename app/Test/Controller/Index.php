@@ -17,6 +17,8 @@ class Test_Controller_Index extends Smvc_Controller
     
     public function login()
     {
+        $model = new Test_Model_Test2("auth", "account");
+        Smvc_Debug::dump($model->SelectAll());
         $this->getView()->render();
     }
 }
