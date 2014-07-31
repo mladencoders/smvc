@@ -16,6 +16,13 @@ class Smvc
         $autoloader = new Autoloader();
         $autoloader->init();
         
+        if (self::getConfig("session", "path")) {
+            Smvc_Session::setSessionPath(Smvc::getDirPath() 
+                . DS 
+                . self::getConfig("session", "path")
+            );
+        }
+        
         $dispatcher = new Smvc_Dispatcher();        
         $dispatcher->run();
     }
@@ -23,11 +30,6 @@ class Smvc
     private static function _setRoot($root)
     {   
         self::$_root = $root;
-        self::$_paths['app'] = self::getRootDirPath() . DS . "app";
-        self::$_paths['config'] = self::getRootDirPath() . DS . "config";
-        self::$_paths['skin'] = self::getRootDirPath() . DS . "skin";
-        self::$_paths['lib'] = self::getRootDirPath() . DS . "lib";
-        self::$_paths[''] = self::getRootDirPath();
     }
     
     private static function _setConfigPath($path)
@@ -42,7 +44,7 @@ class Smvc
     
     public static function getDirPath($dir = "")
     {
-        return self::$_paths[$dir];
+        return self::getRootDirPath() . $dir;
     }
     
     public static function getBaseUrl($dir = "")

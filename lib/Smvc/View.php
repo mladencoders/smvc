@@ -45,7 +45,6 @@ class Smvc_View
     {             
         $this->getLayout()->setContent($this->_getContent());
         $this->_response->setBody($this->getLayout()->load());
-        $this->_response->send();
     }
     
     protected function _loadContent()
