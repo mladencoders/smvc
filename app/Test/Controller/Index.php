@@ -7,11 +7,8 @@ class Test_Controller_Index extends Smvc_Controller
         $session = new Smvc_Session();
         $session->start();
         $name = $session->getData("auth");
+        Smvc::getConfig("database", "host");
         
-        if (!($name = $session->getData("auth"))) {
-            header("Location: /smvc/test/login/index");
-            return;
-        }
         $this->getView()->render();
     }
     

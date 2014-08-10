@@ -21,6 +21,5 @@ class Autoloader
         $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
  
         include $fileName;
-
     }
 }
