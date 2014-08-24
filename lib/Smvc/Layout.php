@@ -10,7 +10,7 @@ class Smvc_Layout
     function __construct($skinName = null) 
     {   
         if ($skinName === null) {
-            $skinName = Smvc_App::getConfig("skin", "name");
+            $skinName = Smvc_App::getConfig("default", "skin");
         }
         
         $this->_skin = $skinName !== null ? $skinName : "default";

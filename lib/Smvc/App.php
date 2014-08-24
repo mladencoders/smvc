@@ -83,11 +83,10 @@ class Smvc_App
         return isset($configs[$section][$config]) ? $configs[$section][$config] : null;
     }
     
-    public static function getModuleConfig($module, $section, $config)
+    public static function getModuleConfig($module, $config)
     {
-        $path = APPLICATION_PATH . DS . ucfirst($module) . DS . "config" . DS . "module.ini";  
-        $configs = parse_ini_file($path, true);
-        return isset($configs[$section][$config]) ? $configs[$section][$config] : null;
+        $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
+        return isset($configs[$module][$config]) ? $configs[$module][$config] : null;
     }
     
     public static function isModuleEnabled($module)
