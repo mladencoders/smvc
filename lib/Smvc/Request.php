@@ -13,19 +13,34 @@ class Smvc_Request
         $this->_params = new Smvc_Params($this->_params);
     }
     
-    public function getModule()
-    {
-        return $this->_module;
-    }
-    
     public function getController()
     {
         return $this->_controller;
     }
-    
+
+    public function setController($controller)
+    {
+        $this->_controller = $controller;
+    }
+
     public function getAction()
     {
         return $this->_action;
+    }
+
+    public function setAction($action)
+    {
+        $this->_action = $action;
+    }
+
+    public function getModule()
+    {
+        return $this->_module;
+    }
+
+    public function setModule($module)
+    {
+        $this->_module = $module;
     }
     
     public function getParam($key)
@@ -68,18 +83,24 @@ class Smvc_Request
     }
     
     private function _parseUrl($rawRequest)
-    {   
-        $url = explode('/', 
-            filter_var(rtrim($rawRequest, '/'), FILTER_SANITIZE_URL)
+    {    
+        $url = $this->_getCustomRoute($rawRequest);
+        $url = explode(
+            '/', 
+            filter_var(
+                rtrim($url ? $url : $rawRequest, '/'), 
+                FILTER_SANITIZE_URL
+            )
         );
         
-        if (empty($rawRequest)) {
-            $url = array();
-        }
-        
-        $this->_module = isset($url[0])? strtolower($url[0]) : 'index';
-        $this->_controller = isset($url[1])? strtolower($url[1]) : 'index';
-        $this->_action = isset($url[2])? strtolower($url[2]) : 'index';
+        $this->setModule(isset($url[0])? strtolower($url[0]) : 'index');
+        $this->setController(isset($url[1])? strtolower($url[1]) : 'index');
+        $this->setAction(isset($url[2])? strtolower($url[2]) : 'index');
         $this->_params = isset($url[3])? array_slice($url,3) : array();
+    }
+    
+    private function _getCustomRoute($request)
+    {
+        return Smvc_App::getRouteConfig($request);
     }
 }

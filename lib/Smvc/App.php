@@ -89,6 +89,12 @@ class Smvc_App
         return isset($configs[$module][$config]) ? $configs[$module][$config] : null;
     }
     
+    public static function getRouteConfig($rounte)
+    {
+        $configs = parse_ini_file(self::_getConfigPath("routes.ini"), true);
+        return isset($configs["custom_routes"][$rounte]) ? $configs["custom_routes"][$rounte] : null;
+    }
+    
     public static function isModuleEnabled($module)
     {
         $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
