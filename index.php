@@ -8,7 +8,7 @@ defined('APPLICATION_PATH')
   
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . . DS . '..' .  DS . 'lib'),
+    realpath(APPLICATION_PATH . DS . '..' .  DS . 'lib'),
     get_include_path(),
 )));
 
@@ -18,8 +18,10 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require_once 'Smvc/Smvc.php';
+require_once 'Smvc/App.php';
 
-$app = new Smvc();
-$app->bootstrap(dirname(__FILE__), 
-    APPLICATION_PATH . DS . "config" . DS . "app.ini");
+$app = new Smvc_App();
+$app->bootstrap(
+    dirname(__FILE__), 
+    APPLICATION_PATH . DS . "config" . DS . "app.ini"
+)->run();

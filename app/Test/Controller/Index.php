@@ -7,7 +7,7 @@ class Test_Controller_Index extends Smvc_Controller
         $session = new Smvc_Session();
         $session->start();
         $name = $session->getData("auth");
-        Smvc::getConfig("database", "host");
+        Smvc_App::getConfig("database", "host");
         
         $this->getView()->render();
     }

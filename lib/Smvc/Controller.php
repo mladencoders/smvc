@@ -27,10 +27,12 @@ class Smvc_Controller
     {
         $action = $this->_request->getAction();
         if (is_callable(array($this, $action))) {
+            Smvc_Event_Manager::trigger("controller_dispatch_before");
             $this->$action();
+            Smvc_Event_Manager::trigger("controller_dispatch_after");
         }
         else {
-            Smvc_Dispatcher::dispatchTo404();
+            throw new Smvc_Dispatcher_Exception("Action not found");
         }
     }
     

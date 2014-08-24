@@ -1,6 +1,6 @@
 <?php
 
-class Autoloader
+class Smvc_Autoloader
 {
     
     public function init()

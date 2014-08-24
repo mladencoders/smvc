@@ -1,0 +1,4 @@
+application_run_started - When application run starts
+application_run_completed - Just before application run finishes
+controller_dispatch_before
+controller_dispatch_after

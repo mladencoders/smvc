@@ -5,30 +5,58 @@ class Smvc_Dispatcher
     protected $_request;
     protected $_response;
     
-    public function run()
+    public function getRequest()
     {
-        $this->_request = new Smvc_Request(isset($_GET['path']) ? $_GET['path']: null);
-        $this->_response = new Smvc_Response();
+        return $this->_request;
+    }
+
+    public function setRequest($request)
+    {
+        $this->_request = $request;
+    }
+
+    public function getResponse()
+    {
+        return $this->_response;
+    }
+
+    public function setResponse($response)
+    {
+        $this->_response = $response;
+    }
+        
+    public function dispatch()
+    {
+        $this->setRequest(new Smvc_Request(isset($_GET['path']) ? $_GET['path'] : null));
+        $this->setResponse(new Smvc_Response());
         $this->_dispatch();
     }
-        
-    protected function _dispatch()
+    
+    public function dispatchTo404()
     {
-        $controlerClass = ucfirst($this->_request->getModule()) . '_Controller_' . ucfirst($this->_request->getController());
-        
-        if (@class_exists($controlerClass)) {          
-            $controller = new $controlerClass($this->_request, $this->_response);
-            $controller->dispatch();
-        } else {
-            self::dispatchTo404();
-        }
-        
-        $this->_response->send();
+        $this->setRequest(new Smvc_Request_404());
+        $this->setResponse(new Smvc_Response_404());
+        $this->_dispatch();   
     }
     
-    public static function dispatchTo404()
+    protected function _dispatch()
     {
-        $controller = new Index_Controller_Error(new Smvc_Request_404(), new Smvc_Response_404());
-        $controller->dispatch();
+        $controlerClass = $this->_getControllerClass($this->getRequest());
+        
+        if (@class_exists($controlerClass)) {          
+            $controller = new $controlerClass($this->getRequest(), $this->getResponse());
+            $controller->dispatch();
+        } else {
+            throw new Smvc_Dispatcher_Exception("Controller not found");
+        }
+        
+        $this->getResponse()->send();
+    }
+    
+    private function _getControllerClass(Smvc_Request $request)
+    {
+        return $controlerClass = ucfirst($this->_request->getModule()) 
+        . '_Controller_' 
+        . ucfirst($this->_request->getController());
     }
 }

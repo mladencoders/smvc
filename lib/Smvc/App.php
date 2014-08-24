@@ -1,7 +1,7 @@
 <?php
 require_once "Smvc/Autoloader.php";
 
-class Smvc
+class Smvc_App
 {   
     private static $_root;
     private static $_url;
@@ -10,23 +10,43 @@ class Smvc
     
     public function bootstrap($rootPath, $configPath)
     {   
+        ini_set('display_errors', 1); 
+        error_reporting(E_ALL);
+        
         self::_setRoot($rootPath);
         self::_setConfigPath($configPath);
         
-        $autoloader = new Autoloader();
+        $autoloader = new Smvc_Autoloader();
         $autoloader->init();
         
-        if (self::getConfig("session", "path")) {
-            Smvc_Session::setSessionPath(Smvc::getDirPath() 
+        if ($sessionPath = self::getConfig("session", "path")) {
+            Smvc_Session::setSessionPath(Smvc_App::getDirPath() 
                 . DS 
-                . self::getConfig("session", "path")
+                . $sessionPath
             );
         }
         
-        $dispatcher = new Smvc_Dispatcher();        
-        $dispatcher->run();
-    }
+        // Run user bootstrap
+        UserBootstrap::bootstrap();
 
+        return $this;
+    }
+    
+    public function run()
+    {   
+        Smvc_Event_Manager::trigger("application_run_started");
+        $dispatcher = new Smvc_Dispatcher();
+        
+        try {  
+            $dispatcher->dispatch();
+        } catch(Smvc_Dispatcher_Exception $e) {
+            $dispatcher->dispatchTo404();
+        }
+        
+        Smvc_Event_Manager::trigger("application_run_completed");
+        return $this;
+    }
+    
     private static function _setRoot($root)
     {   
         self::$_root = $root;

@@ -8,9 +8,9 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
     
     public function __construct($dbName)
     {
-        $host = Smvc::getConfig("database", "host");
-        $user = Smvc::getConfig("database", "user");
-        $password = Smvc::getConfig("database", "password");
+        $host = Smvc_App::getConfig("database", "host");
+        $user = Smvc_App::getConfig("database", "user");
+        $password = Smvc_App::getConfig("database", "password");
         try {
             $this->_db = new PDO("mysql:host=$host;dbname=$dbName;charset=UTF8", $user, $password);
             $this->_db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);

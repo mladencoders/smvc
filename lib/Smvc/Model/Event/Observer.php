@@ -4,7 +4,7 @@ abstract class Smvc_Model_Event_Observer
 {
     protected $_event;
     
-    public function __construct($event) 
+    public function __construct($event = "event_any") 
     {
         $this->setEvent($event);
     }

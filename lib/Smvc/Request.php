@@ -60,7 +60,7 @@ class Smvc_Request
             $url[1] = $this->getAction();
         }
         
-        return Smvc::getBaseUrl() . "/" . implode("/", $url);
+        return Smvc_App::getBaseUrl() . "/" . implode("/", $url);
     }
     
     private function _parseUrl($rawRequest)

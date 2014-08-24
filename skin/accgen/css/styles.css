@@ -1,0 +1,68 @@
+*, html,
+body {
+    margin:0;
+    padding:0;  
+}
+
+html,
+body {
+    height: 100%;
+    color: #333333;
+    font-family: ‘Lucida Console’, Monaco, monospace;
+    background:#ECECFB;
+}
+
+#wrapper {
+    min-height:100%;
+}
+
+#header {
+    background:#40FF00;
+    height: 100px;
+    line-height:100px;
+    border-bottom: 3px solid #333333;
+    font-size: 2em;
+}
+
+#content {
+    margin-top: 100px;
+    padding-bottom:30px; /* Height of the footer element */
+}
+
+h1, h3 {
+    text-align: center;
+}
+
+a {
+ text-decoration: none;
+}
+
+.main-wrap {
+    width: 90%;
+    margin: auto;
+}
+
+.input {
+    float: left;
+}
+
+.output {
+    float: right;
+}
+
+.input, .output {
+    width: 49%;
+}
+
+button {
+    width: 100%;
+    margin: auto;
+}
+
+#input, #output {
+    width: 100%;
+    min-height: 300px;
+    height: 300px;
+}
+
+
