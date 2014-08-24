@@ -53,14 +53,18 @@ class Smvc_Request
     {
         $url = explode("/", $url);
         if ($url[0] === "*") {
-            $url[0] = $this->getController();
+            $url[0] = $this->getModule();
         }
         
         if ($url[1] === "*") {
-            $url[1] = $this->getAction();
+            $url[1] = $this->getController();
         }
         
-        return Smvc_App::getBaseUrl() . "/" . implode("/", $url);
+        if ($url[2] === "*") {
+            $url[2] = $this->getAction();
+        }
+        
+        return Smvc_App::getBaseUrl() . DS . implode(DS, $url);
     }
     
     private function _parseUrl($rawRequest)
