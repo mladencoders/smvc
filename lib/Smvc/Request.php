@@ -73,9 +73,9 @@ class Smvc_Request
             $url = array();
         }
         
-        $this->_module = isset($url[0])? $url[0] : 'Index';
-        $this->_controller = isset($url[1])? $url[1] : 'Index';
-        $this->_action = isset($url[2])? $url[2] : 'index';
+        $this->_module = isset($url[0])? strtolower($url[0]) : 'index';
+        $this->_controller = isset($url[1])? strtolower($url[1]) : 'index';
+        $this->_action = isset($url[2])? strtolower($url[2]) : 'index';
         $this->_params = isset($url[3])? array_slice($url,3) : array();
     }
 }

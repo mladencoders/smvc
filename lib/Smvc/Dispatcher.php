@@ -41,6 +41,10 @@ class Smvc_Dispatcher
     
     protected function _dispatch()
     {
+        if (!Smvc_App::isModuleEnabled($this->getRequest()->getModule())) {
+            throw new Smvc_Dispatcher_Exception("Module not enabled");
+        }
+        
         $controlerClass = $this->_getControllerClass($this->getRequest());
         
         if (@class_exists($controlerClass)) {          
@@ -55,7 +59,7 @@ class Smvc_Dispatcher
     
     private function _getControllerClass(Smvc_Request $request)
     {
-        return $controlerClass = ucfirst($this->_request->getModule()) 
+        return $controlerClass = ucfirst($this->getRequest()->getModule()) 
         . '_Controller_' 
         . ucfirst($this->_request->getController());
     }

@@ -23,5 +23,5 @@ require_once 'Smvc/App.php';
 $app = new Smvc_App();
 $app->bootstrap(
     dirname(__FILE__), 
-    APPLICATION_PATH . DS . "config" . DS . "app.ini"
+    APPLICATION_PATH . DS . "config" . DS
 )->run();

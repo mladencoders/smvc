@@ -57,6 +57,11 @@ class Smvc_App
         self::$_configPath = $path;
     }
     
+    private static function _getConfigPath($configFile)
+    {
+        return self::$_configPath . $configFile;
+    }
+    
     public static function getRootDirPath()
     {
         return self::$_root;
@@ -74,7 +79,7 @@ class Smvc_App
     
     public static function getConfig($section, $config)
     {
-        $configs = parse_ini_file(self::$_configPath, true);
+        $configs = parse_ini_file(self::_getConfigPath("app.ini"), true);
         return isset($configs[$section][$config]) ? $configs[$section][$config] : null;
     }
     
@@ -83,5 +88,11 @@ class Smvc_App
         $path = APPLICATION_PATH . DS . ucfirst($module) . DS . "config" . DS . "module.ini";  
         $configs = parse_ini_file($path, true);
         return isset($configs[$section][$config]) ? $configs[$section][$config] : null;
+    }
+    
+    public static function isModuleEnabled($module)
+    {
+        $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
+        return array_key_exists($module, $configs) && $configs[$module]["enabled"];
     }
 }
