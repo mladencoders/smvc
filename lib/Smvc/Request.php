@@ -2,15 +2,22 @@
 
 class Smvc_Request
 {
-    protected $_controller;
-    protected $_action;
+    protected $_module          = 'index';
+    protected $_controller      = 'index';
+    protected $_action          = 'index';
+    
     protected $_params;
-    protected $_module;
+    
+    const URL_PART_ROUTE          = 0;
+    const URL_PART_PARAMS         = 1;
+    
+    const ROUTE_PART_MODULE       = 0;
+    const ROUTE_PART_CONTROLLER   = 1;
+    const ROUTE_PART_ACTION       = 2;
     
     function __construct($rawRequest) 
     {
         $this->_parseUrl($rawRequest);
-        $this->_params = new Smvc_Params($this->_params);
     }
     
     public function getController()
@@ -21,6 +28,8 @@ class Smvc_Request
     public function setController($controller)
     {
         $this->_controller = $controller;
+        
+        return $this;
     }
 
     public function getAction()
@@ -31,6 +40,8 @@ class Smvc_Request
     public function setAction($action)
     {
         $this->_action = $action;
+        
+        return $this;
     }
 
     public function getModule()
@@ -41,6 +52,8 @@ class Smvc_Request
     public function setModule($module)
     {
         $this->_module = $module;
+        
+        return $this;
     }
     
     public function getParam($key)
@@ -67,40 +80,67 @@ class Smvc_Request
     public function getUrl($url)
     {
         $url = explode("/", $url);
-        if ($url[0] === "*") {
-            $url[0] = $this->getModule();
+        foreach ($url as $index => &$value) {
+            if ($value === '*') {
+                $value = $this->_getRouteDataByIndex($index);
+            }
         }
         
-        if ($url[1] === "*") {
-            $url[1] = $this->getController();
-        }
-        
-        if ($url[2] === "*") {
-            $url[2] = $this->getAction();
-        }
-        
-        return Smvc_App::getBaseUrl() . DS . implode(DS, $url);
+        return Smvc_App::getBaseUrl() . implode("/", $url);
     }
     
-    private function _parseUrl($rawRequest)
+    protected function _parseUrl($rawRequest)
     {    
-        $url = $this->_getCustomRoute($rawRequest);
         $url = explode(
-            '/', 
+            '!', 
             filter_var(
-                rtrim($url ? $url : $rawRequest, '/'), 
+                rtrim($rawRequest, '/'), 
                 FILTER_SANITIZE_URL
             )
         );
         
-        $this->setModule(isset($url[0])? strtolower($url[0]) : 'index');
-        $this->setController(isset($url[1])? strtolower($url[1]) : 'index');
-        $this->setAction(isset($url[2])? strtolower($url[2]) : 'index');
-        $this->_params = isset($url[3])? array_slice($url,3) : array();
+        $this->_parseRoute($url[self::URL_PART_ROUTE]);                    
+        $this->_params = new Smvc_Params(
+            array_key_exists(self::URL_PART_PARAMS, $url)? 
+            $url[self::URL_PART_PARAMS] : 
+            ""
+        );
+        
+        return $this;
     }
     
-    private function _getCustomRoute($request)
+    protected function _parseRoute($route)
+    {
+        $croute = $this->_getCustomRoute($route);
+        foreach (explode("/", trim($croute? $croute : $route, "/")) as $index => $value) {
+            $this->_setRouteDataByIndex($index, $value);
+        }
+        
+        return $this;
+    }
+    
+    protected function _getCustomRoute($request)
     {
         return Smvc_App::getRouteConfig($request);
+    }
+    
+    protected function _getRouteDataByIndex($index) {
+        switch($index) {
+            case self::ROUTE_PART_MODULE: return $this->getModule(); break;
+            case self::ROUTE_PART_CONTROLLER: return $this->getController(); break;
+            case self::ROUTE_PART_ACTION: return $this->getAction(); break;
+            default: return $this->getModule(); break;
+        }
+    }
+    
+    protected function _setRouteDataByIndex($index, $value) {
+        switch($index) {
+            case self::ROUTE_PART_MODULE: $this->setModule($value); break;
+            case self::ROUTE_PART_CONTROLLER: $this->setController($value); break;
+            case self::ROUTE_PART_ACTION: $this->setAction($value); break;
+            default: break;
+        }
+        
+        return $this;
     }
 }

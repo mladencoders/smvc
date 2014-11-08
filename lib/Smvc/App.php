@@ -34,16 +34,16 @@ class Smvc_App
     
     public function run()
     {   
-        Smvc_Event_Manager::trigger("application_run_started");
+        Smvc_Event_Manager::trigger("application_run_before");
         $dispatcher = new Smvc_Dispatcher();
-        
+
         try {  
             $dispatcher->dispatch();
         } catch(Smvc_Dispatcher_Exception $e) {
             $dispatcher->dispatchTo404();
         }
         
-        Smvc_Event_Manager::trigger("application_run_completed");
+        Smvc_Event_Manager::trigger("application_run_after");
         return $this;
     }
     
@@ -74,7 +74,7 @@ class Smvc_App
     
     public static function getBaseUrl($dir = "")
     {
-        return self::getConfig("url", "base") . $dir;
+        return trim(self::getConfig("url", "base"), '/') . '/' . $dir;
     }
     
     public static function getConfig($section, $config)

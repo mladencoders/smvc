@@ -44,7 +44,7 @@ class Smvc_Dispatcher
         if (!Smvc_App::isModuleEnabled($this->getRequest()->getModule())) {
             throw new Smvc_Dispatcher_Exception("Module not enabled");
         }
-        
+
         $controlerClass = $this->_getControllerClass($this->getRequest());
         
         if (@class_exists($controlerClass)) {          
