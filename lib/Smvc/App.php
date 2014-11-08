@@ -34,9 +34,7 @@ class Smvc_App
     
     public function run()
     {   
-        Smvc_Event_Manager::trigger("application_run_before");
         $dispatcher = new Smvc_Dispatcher();
-
         try {  
             $dispatcher->dispatch();
         } catch(Smvc_Dispatcher_Exception $e) {

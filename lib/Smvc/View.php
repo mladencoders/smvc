@@ -50,7 +50,7 @@ class Smvc_View
     protected function _loadContent()
     {
         ob_start();
-        require $this->getRequest()->getModule() . DS . 'View' . DS . $this->getTemplate() . ".phtml";
+        require $this->getRequest()->getModule() . DS . 'view' . DS . $this->getTemplate() . ".phtml";
         $this->_content = ob_get_clean();
     }
     

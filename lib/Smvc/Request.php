@@ -113,7 +113,9 @@ class Smvc_Request
     {
         $croute = $this->_getCustomRoute($route);
         foreach (explode("/", trim($croute? $croute : $route, "/")) as $index => $value) {
-            $this->_setRouteDataByIndex($index, $value);
+            if (!empty($value)) {
+                $this->_setRouteDataByIndex($index, $value);
+            }
         }
         
         return $this;
