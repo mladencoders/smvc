@@ -6,6 +6,7 @@ abstract class Smvc_Model_Event_Observer
     
     public function __construct($event = "event_any") 
     {
+        Smvc_Debug::assert(is_string($event));
         $this->setEvent($event);
     }
     
@@ -16,6 +17,7 @@ abstract class Smvc_Model_Event_Observer
 
     public function setEvent($event)
     {
+        Smvc_Debug::assert(is_string($event));
         $this->_event = $event;
     }
     

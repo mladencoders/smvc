@@ -18,6 +18,7 @@ class Smvc_Layout
     
     public function setTheme($themeName)
     {
+        Smvc_Debug::assert(is_string($themeName));
         $this->_theme = $themeName;
     }
     
@@ -28,6 +29,7 @@ class Smvc_Layout
     
     public function setContent($content)
     {
+        Smvc_Debug::assert(is_string($content));
         $this->_content = $content;
     }
     
@@ -39,6 +41,7 @@ class Smvc_Layout
     public function getBlock($block)
     {
         Smvc_Debug::start("Smvc_Layout::getBlock('{$block}}')");
+        Smvc_Debug::assert(is_string($block));
         if (!isset($this->_blocks[$block])) {
             $this->_loadBlock($block, ".phtml");
         }

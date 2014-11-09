@@ -6,6 +6,7 @@ class Smvc_Model_Db_Table extends Smvc_Model_Db
     
     public function __construct($dbName, $tableName)
     {
+        Smvc_Debug::assert(is_string($tableName));
         parent::__construct($dbName);
         
         $this->_table = $tableName;

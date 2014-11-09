@@ -32,7 +32,7 @@ class Smvc_Dispatcher
     public function dispatch()
     {
         Smvc_Debug::start("Smvc_Dispatcher::dispatch()");
-        $this->setRequest(new Smvc_Request(isset($_GET['path']) ? $_GET['path'] : null));
+        $this->setRequest(new Smvc_Request(isset($_GET['path']) ? $_GET['path'] : ""));
         $this->setResponse(new Smvc_Response());
         $this->_dispatch();
         $this->getResponse()->send();

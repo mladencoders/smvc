@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_Dispatcher_Exception extends Exception
+class Smvc_Dispatcher_Exception extends Smvc_Exception
 {
 
 }

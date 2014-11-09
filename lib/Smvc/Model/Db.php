@@ -9,6 +9,7 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
     public function __construct($dbName)
     {
         Smvc_Debug::start("Smvc_Model_Db::__constrict('{$dbName}')");
+        Smvc_Debug::assert(is_string($dbName));
         $host = Smvc_App::getConfig("database", "host");
         $user = Smvc_App::getConfig("database", "user");
         $password = Smvc_App::getConfig("database", "password");
@@ -35,36 +36,37 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
     
     public function select($columns = "*")
     {
+        Smvc_Debug::assert(is_string($columns));
         $this->_statment .= "SELECT $columns ";
         return $this;
     }
     
     public function from($table)
     {
+        Smvc_Debug::assert(is_string($table));
         $this->_statment .= "FROM $table ";
         return $this;
     }
     
     public function where($condition)
     {
+        Smvc_Debug::assert(is_string($condition));
         $this->_statment .= "WHERE $condition ";
         return $this;
     }
     
     public function limit($limit)
     {
-        $this->_statment .= "LIMIT $limit ";
+        Smvc_Debug::assert(is_string((string)$limit));
+        $this->_statment .= "LIMIT {$limit} ";
         return $this;
     }
     
-    public function prepare($statement = null) 
+    public function prepare($statement = "") 
     {
-        if ($statement !== null) {
-            $this->_statment = $statement;
-        }
-        
-        if(substr($this->_statment, -1) !== ";") {
-            $this->_statment .= ";";
+        Smvc_Debug::assert(is_string($statement));
+        if ($statement !== "") {
+            $this->_statment = rtrim($statement, ";") . ";";
         }
         
         $this->_preparedStmt = $this->getAdapter()->prepare($this->_statment);

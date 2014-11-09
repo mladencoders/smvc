@@ -91,6 +91,8 @@ class Smvc_Request extends Smvc_Object
     
     protected function _parseUrl($rawRequest)
     {    
+        Smvc_Debug::assert(is_string($rawRequest));
+        
         $url = explode(
             '!', 
             filter_var(
