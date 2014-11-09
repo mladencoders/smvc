@@ -68,7 +68,7 @@ class Smvc_Object
             return $this;
         }
         
-        if (is_string($keyIndex)) {
+        if (is_string($key)) {
             $this->__data[$key] = $value;
         }
         
