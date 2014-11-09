@@ -13,7 +13,7 @@ class Smvc_Layout
             $skinName = Smvc_App::getConfig("default", "skin");
         }
         
-        $this->_skin = $skinName !== null ? $skinName : "default";
+        $this->_skin = $skinName;
     }
     
     public function setSkin($skinName)
