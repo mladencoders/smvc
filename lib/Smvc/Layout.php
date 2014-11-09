@@ -43,7 +43,7 @@ class Smvc_Layout
             $this->_loadBlock($block, ".phtml");
         }
         
-        Smvc_Debug::finish("Smvc_Layout::getBlock('{$block}}')");
+        Smvc_Debug::finish("Smvc_Layout::getBlock('{$block}')");
         return $this->_blocks[$block];
     }  
     

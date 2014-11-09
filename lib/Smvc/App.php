@@ -77,26 +77,42 @@ class Smvc_App
     
     public static function getConfig($section, $config)
     {
+        //Smvc_Debug::start("Smvc_App::getConfig('{$section}', '{$config}}')");
         $configs = parse_ini_file(self::_getConfigPath("app.ini"), true);
-        return isset($configs[$section][$config]) ? $configs[$section][$config] : null;
+        $appConfig = isset($configs[$section][$config]) ? $configs[$section][$config] : null;
+        //Smvc_Debug::finish("Smvc_App::getConfig('{$section}', '{$config}}')");
+        
+        return $appConfig;
     }
     
     public static function getModuleConfig($module, $config)
     {
+        Smvc_Debug::start("Smvc_App::getModuleConfig('{$module}', '{$config}')");
         $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
-        return isset($configs[$module][$config]) ? $configs[$module][$config] : null;
+        $moduleConfig = isset($configs[$module][$config]) ? $configs[$module][$config] : null;
+        Smvc_Debug::finish("Smvc_App::getModuleConfig('{$module}', '{$config}')");
+        
+        return $moduleConfig;
     }
     
-    public static function getRouteConfig($rounte)
+    public static function getRouteConfig($route)
     {
+        Smvc_Debug::start("Smvc_App::getRouteConfig('{$route}')");
         $configs = parse_ini_file(self::_getConfigPath("routes.ini"), true);
-        return isset($configs["custom_routes"][$rounte]) ? $configs["custom_routes"][$rounte] : null;
+        $routeConfig = isset($configs["custom_routes"][$route]) ? $configs["custom_routes"][$route] : null;
+        Smvc_Debug::finish("Smvc_App::getRouteConfig('{$route}')");
+        
+        return $routeConfig;
     }
     
     public static function isModuleEnabled($module)
     {
+        Smvc_Debug::start("Smvc_App::isModeuleEnabled('{$module}')");
         $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
-        return array_key_exists($module, $configs) && $configs[$module]["enabled"];
+        $enabled = array_key_exists($module, $configs) && $configs[$module]["enabled"];
+        Smvc_Debug::finish("Smvc_App::isModeuleEnabled('{$module}')");
+        
+        return $enabled;
     }
     
     protected function _userBoootstrap()
@@ -107,7 +123,9 @@ class Smvc_App
                 continue;
             }
             
+            Smvc_Debug::start("{$config['bootstrap_class']}::bootstrap()");
             $config['bootstrap_class']::bootstrap();
+            Smvc_Debug::finish("{$config['bootstrap_class']}::bootstrap()");
         }
     }
 }

@@ -8,6 +8,7 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
     
     public function __construct($dbName)
     {
+        Smvc_Debug::start("Smvc_Model_Db::__constrict('{$dbName}')");
         $host = Smvc_App::getConfig("database", "host");
         $user = Smvc_App::getConfig("database", "user");
         $password = Smvc_App::getConfig("database", "password");
@@ -17,6 +18,7 @@ class Smvc_Model_Db extends Smvc_Model_Abstract
         } catch (PDOException $e) {
             die($e->getMessage());
         }
+        Smvc_Debug::finish("Smvc_Model_Db::__constrict('{$dbName}')");
     }
     
     public function getAdapter()
