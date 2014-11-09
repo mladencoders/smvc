@@ -27,7 +27,7 @@ class Smvc_App
         }
         
         // Run user bootstrap
-        UserBootstrap::bootstrap();
+        $this->_userBoootstrap();        
 
         return $this;
     }
@@ -97,5 +97,17 @@ class Smvc_App
     {
         $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
         return array_key_exists($module, $configs) && $configs[$module]["enabled"];
+    }
+    
+    protected function _userBoootstrap()
+    {
+        $configs = parse_ini_file(self::_getConfigPath("modules.ini"), true);
+        foreach ($configs as $config) {
+            if (!array_key_exists('bootstrap_class', $config)) {
+                continue;
+            }
+            
+            $config['bootstrap_class']::bootstrap();
+        }
     }
 }
