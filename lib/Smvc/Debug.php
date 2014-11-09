@@ -59,10 +59,8 @@ class Smvc_Debug
     
     public static function assert($statment)
     {
-        self::start("Smvc_Debug::assert()");
         if (!$statment) {
             throw new Smvc_Debug_Exception("Assert failed");
         }
-        self::finish("Smvc_Debug::assert()");
     }
 }
