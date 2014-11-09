@@ -2,28 +2,28 @@
 
 class Smvc_Layout
 {
-    protected $_skin;
+    protected $_theme;
     protected $layout;
     protected $content = "";
     protected $_blocks = array();
     
-    function __construct($skinName = null) 
+    function __construct($themeName = null) 
     {   
-        if ($skinName === null) {
-            $skinName = Smvc_App::getConfig("default", "skin");
+        if ($themeName === null) {
+            $themeName = Smvc_App::getConfig("default", "theme");
         }
         
-        $this->_skin = $skinName;
+        $this->_theme = $themeName;
     }
     
-    public function setSkin($skinName)
+    public function setTheme($themeName)
     {
-        $this->_skin = $skinName;
+        $this->_theme = $themeName;
     }
     
-    public function getSkin()
+    public function getTheme()
     {
-        return $this->_skin;
+        return $this->_theme;
     }
     
     public function setContent($content)
@@ -57,14 +57,14 @@ class Smvc_Layout
     protected function _loadBlock($block, $extension)
     {
         ob_start();
-        require 'theme' . DS . $this->_skin . DS . $block . $extension;
+        require 'theme' . DS . $this->getTheme() . DS . $block . $extension;
         $this->_blocks[$block] = ob_get_clean();
     }
     
     protected function _load()
     {
         ob_start();
-        require 'theme' . DS . $this->_skin . DS . "layout.phtml";
+        require 'theme' . DS . $this->getTheme() . DS . "layout.phtml";
         $this->_layout = ob_get_clean();
         
         return $this->_layout;

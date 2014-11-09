@@ -15,7 +15,7 @@ class Smvc_View extends Smvc_Object
         $this->_response = $response;
         $this->_template = $this->getRequest()->getController() . DS . $this->getRequest()->getAction();
         $this->_layout = new Smvc_Layout(
-            Smvc_App::getModuleConfig($this->getRequest()->getModule(), "skin")
+            Smvc_App::getModuleConfig($this->getRequest()->getModule(), "theme")
         );
     }
     
