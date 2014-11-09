@@ -57,14 +57,14 @@ class Smvc_Layout
     protected function _loadBlock($block, $extension)
     {
         ob_start();
-        require 'skin' . DS . $this->_skin . DS . $block . $extension;
+        require 'theme' . DS . $this->_skin . DS . $block . $extension;
         $this->_blocks[$block] = ob_get_clean();
     }
     
     protected function _load()
     {
         ob_start();
-        require 'skin' . DS . $this->_skin . DS . "layout.phtml";
+        require 'theme' . DS . $this->_skin . DS . "layout.phtml";
         $this->_layout = ob_get_clean();
         
         return $this->_layout;
