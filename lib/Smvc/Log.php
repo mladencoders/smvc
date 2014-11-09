@@ -13,11 +13,11 @@ class Smvc_Log
             return;
         }
         
-        $logPath = Smvc_App::getDirPath() . Smvc_App::getConfig($logType, "path");
-        if (! file_exists(dirname($logPath))) {
+        $logPath = realpath(Smvc_App::getDirPath() . Smvc_App::getConfig($logType, "path"));
+        if (!file_exists(dirname($logPath))) {
             mkdir(dirname($logPath), 0777, true);
         }
         
-        file_put_contents($logPath, $message.PHP_EOL, FILE_APPEND);
+        file_put_contents($logPath, $message . PHP_EOL, FILE_APPEND);
     }
 }

@@ -10,11 +10,15 @@ class Test_Controller_Index extends Smvc_Controller
     
     public function login()
     {
+        Smvc_Debug::start('Test_Controller_Index::login');
         $model = new Test_Model_Test();
         $model->setData("mrk", 2);
+        $rand = rand();
+        Smvc_Debug::dump($rand);
+        for ($i = 0; $i < $rand * 1000; $i++) {}
         $model->setData(array('trt'=> 4, 'mek'));
-        Smvc_Debug::dump($model->getData());
         $this->getView()->render();
+        Smvc_Debug::finish('Test_Controller_Index::login');
     }
     
     public function object()

@@ -67,7 +67,7 @@ class Smvc_App
     
     public static function getDirPath($dir = "")
     {
-        return self::getRootDirPath() . $dir;
+        return self::getRootDirPath() . DS . $dir;
     }
     
     public static function getBaseUrl($dir = "")

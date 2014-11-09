@@ -2,6 +2,8 @@
 
 class Smvc_Debug
 {
+    protected static $_timers = array();
+ 
     public static function dump($var, $echo = true)
     {
         $bt = debug_backtrace();
@@ -25,5 +27,33 @@ class Smvc_Debug
         }
         
         return $output;
+    }
+    
+    public static function start($timerName)
+    {
+        self::$_timers[$timerName] = array(
+            'timer'         => microtime(true),
+            'timer_name'    => $timerName
+        );
+    }
+    
+    public static function finish($timerName)
+    {
+        $timer = self::cancel($timerName);
+        Smvc_Log::log("{$timerName} needed {$timer['timer']}s to complete", 'debug-log');
+        
+        return $timer;
+    }
+    
+    public static function cancel($timerName)
+    {
+        $timer = null;
+        if (array_key_exists($timerName, self::$_timers)) {
+            $timer = self::$_timers[$timerName];
+            $timer['timer'] = microtime(true) - $timer['timer'];
+            unset(self::$_timers[$timerName]);
+        }
+        
+        return $timer;
     }
 }
