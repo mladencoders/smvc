@@ -12,8 +12,8 @@ class Smvc_Debug
         $header = "===============================" . PHP_EOL;
         $header .= "Smvc variable dump" . PHP_EOL; 
         $header .= "-------------------------------" . PHP_EOL;
-        $header .= "File: " . $caller['file'] . PHP_EOL;
-        $header .= "Line: #" . $caller['line'] . PHP_EOL;
+        $header .= "File: {$caller['file']}" . PHP_EOL;
+        $header .= "Line: #{$caller['line']}" . PHP_EOL;
         $header .= "-------------------------------";
         ob_start();
         var_dump($var);
@@ -40,7 +40,9 @@ class Smvc_Debug
     public static function finish($timerName)
     {
         $timer = self::cancel($timerName);
-        Smvc_Log::log("{$timerName} needed {$timer['timer']}s to complete", 'debug-log');
+        if ($timer) {
+            Smvc_Log::log("{$timerName} needed {$timer['timer']}s to complete", 'debug-log');
+        }
         
         return $timer;
     }
