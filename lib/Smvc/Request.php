@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_Request
+class Smvc_Request extends Smvc_Object
 {
     protected $_module          = 'index';
     protected $_controller      = 'index';

@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_Controller
+class Smvc_Controller extends Smvc_Object
 {
     protected $_view;
     protected $_request;

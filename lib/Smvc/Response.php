@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_Response
+class Smvc_Response extends Smvc_Object
 {
     protected $_headers = array();
     protected $_body = "";

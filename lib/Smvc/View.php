@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_View
+class Smvc_View extends Smvc_Object
 {
     protected $_template;
     protected $_isRendered = false;

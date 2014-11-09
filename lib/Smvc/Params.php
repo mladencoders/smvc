@@ -1,6 +1,6 @@
 <?php
 
-class Smvc_Params
+class Smvc_Params extends Smvc_Object
 {
     protected $_params = array();
     
