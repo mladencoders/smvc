@@ -8,9 +8,7 @@ class Smvc_View extends Smvc_Object
     protected $_content;
     protected $_request;
     protected $_response;
-    
-    protected $_data = array();
-    
+        
     function __construct(Smvc_Request $request, Smvc_Response $response) 
     {        
         $this->_request = $request;
@@ -61,15 +59,5 @@ class Smvc_View extends Smvc_Object
         }
         
         return $this->_content;
-    }
-    
-    public function setData($key, $value)
-    {
-        $this->_data[$key] = $value;
-    }
-    
-    public function getData($key)
-    {
-        return isset($this->_data[$key])? $this->_data[$key]: null;
     }
 }
