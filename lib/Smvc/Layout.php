@@ -38,18 +38,22 @@ class Smvc_Layout
     
     public function getBlock($block)
     {
+        Smvc_Debug::start("Smvc_Layout::getBlock('{$block}}')");
         if (!isset($this->_blocks[$block])) {
             $this->_loadBlock($block, ".phtml");
         }
         
+        Smvc_Debug::finish("Smvc_Layout::getBlock('{$block}}')");
         return $this->_blocks[$block];
     }  
     
     public function load()
     {
+        Smvc_Debug::start("Smvc_Layout::load()");
         if (!isset($this->_layout)) {
             $this->_load();
         }
+        Smvc_Debug::finish("Smvc_Layout::load()");
         
         return $this->_layout;
     }

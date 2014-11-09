@@ -13,6 +13,8 @@ class Smvc_Dispatcher
     public function setRequest($request)
     {
         $this->_request = $request;
+        
+        return $this;
     }
 
     public function getResponse()
@@ -23,13 +25,20 @@ class Smvc_Dispatcher
     public function setResponse($response)
     {
         $this->_response = $response;
+        
+        return $this;
     }
         
     public function dispatch()
     {
+        Smvc_Debug::start("Smvc_Dispatcher::dispatch()");
         $this->setRequest(new Smvc_Request(isset($_GET['path']) ? $_GET['path'] : null));
         $this->setResponse(new Smvc_Response());
         $this->_dispatch();
+        $this->getResponse()->send();
+        Smvc_Debug::finish("Smvc_Dispatcher::dispatch()");
+        
+        return $this;
     }
     
     public function dispatchTo404()
@@ -37,6 +46,9 @@ class Smvc_Dispatcher
         $this->setRequest(new Smvc_Request_404());
         $this->setResponse(new Smvc_Response_404());
         $this->_dispatch();   
+        $this->getResponse()->send();
+        
+        return $this;
     }
     
     protected function _dispatch()
@@ -53,8 +65,8 @@ class Smvc_Dispatcher
         } else {
             throw new Smvc_Dispatcher_Exception("Controller not found");
         }
-        
-        $this->getResponse()->send();
+
+        return $this;
     }
     
     private function _getControllerClass(Smvc_Request $request)
