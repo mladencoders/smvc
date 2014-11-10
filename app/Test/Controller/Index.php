@@ -21,8 +21,22 @@ class Test_Controller_Index extends Smvc_Controller
         Smvc_Debug::finish('Test_Controller_Index::login');
     }
     
-    public function object()
+    public function stack()
     {
-
+        $stack = new Smvc_Data_Stack();
+        
+        Smvc_Debug::start('stack1::push');
+        for ($i = 0; $i < 10; $i++) {
+            $value = rand();
+            $stack->push($value);
+            var_dump($value);
+        }        
+        Smvc_Debug::finish('stack1::push');
+        
+        Smvc_Debug::start('stack1::pop');
+        for ($i = 0; $i < 10; $i++) {
+            var_dump($stack->pop());
+        }
+        Smvc_Debug::finish('stack1::pop');
     }
 }
