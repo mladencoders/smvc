@@ -34,9 +34,7 @@ class Smvc_Object
             return $data;
         }
         
-        return array_key_exists($key, $this->__data) ?
-                    $this->__data[$key] :
-                    null;
+        return array_key_exists($key, $this->__data) ? $this->__data[$key] : null;
     }
     
     /**

@@ -9,16 +9,23 @@ class Smvc_Data_Queue extends Smvc_Object
         $this->_queue = array();
     }
     
+    public function getQueue()
+    {
+        return $this->_queue;
+    }
+    
     public function add($value)
     {
-        array_push($this->_queue, $value);
+        array_push($this->getQueue(), $value);
+        
+        return $this;
     }
     
     public function remove()
     {
-        array_shift($this->_queue);
+        return array_shift($this->getQueue());
     }
-    
+      
     public function clear()
     {
         $this->_queue = array();
