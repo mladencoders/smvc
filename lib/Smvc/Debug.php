@@ -3,7 +3,8 @@
 class Smvc_Debug
 {
     protected static $_timers = array();
- 
+    protected static $_enabled = false;
+    
     public static function dump($var, $echo = true)
     {
         $bt = debug_backtrace();
@@ -29,8 +30,24 @@ class Smvc_Debug
         return $output;
     }
     
+    public static function enable()
+    {
+        self::$_enabled = true;
+    }
+    
+    public static function disable()
+    {
+        self::$_enabled = false;
+    }
+    
     public static function start($timerName)
     {
+        self::assert(is_string($timerName));
+        
+        if (!self::$_enabled) {
+            return;
+        }
+        
         self::$_timers[$timerName] = array(
             'timer'         => microtime(true),
             'timer_name'    => $timerName
@@ -49,6 +66,8 @@ class Smvc_Debug
     
     public static function cancel($timerName)
     {
+        self::assert(is_string($timerName));
+        
         $timer = null;
         if (array_key_exists($timerName, self::$_timers)) {
             $timer = self::$_timers[$timerName];
